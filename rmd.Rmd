@@ -1,0 +1,282 @@
+---
+title: "R Markdown: An Introduction"
+subtitle: "Department of Mathematics, Soochow University"
+author: "甄聰明"
+date: "`r format(Sys.time(), '%d %B %Y')`" 
+output: 
+  bookdown::html_document2:
+    theme: lumen
+    highlight: tango	
+    toc: true
+    toc_depth: 3
+    number_sections: true 
+---
+
+<!-- global setup -->
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rmdformats)
+```
+
+<!-- 
+###########################################################
+# Markdown Syntax                                         #
+# This style is personal; you don't need to follow.       #
+###########################################################
+-->
+
+# Markdown Syntax {#Syntax}
+
+## Headers 
+# Header 1 (Unnumbered) {.unnumbered}
+## Header 2 {-}
+### Header 3 {-}
+#### Header 4 {-}
+##### Header 5  {-}
+###### Header 6  {-} 
+
+## Available Themes
+[R Markdown Theme Gallery](https://www.datadreaming.org/post/r-markdown-theme-gallery/)
+
+## Enumeration: Without Number
+* Plain text 
+     + *italics* and _italics_ 
+     + <em>italics </em>
+          - **bold** and __bold__
+* Color (with html style): <span style="color: green;"> This is green </span>.
+
+## Enumeration: With Number 
+1. superscript^2^ 
+2. subscript~2~ 
+    i) The Definitive R Markdown [User Manual](https://bookdown.org/yihui/rmarkdown/).
+    iii) My homepage <https://chang-ye-tu.github.io/>  
+        A. endash: --     
+        B. emdash: ---     
+        C. ellipsis: ...   
+        D. ~~strikethrough~~
+
+End a line with two spaces to start a new paragraph.
+
+
+<!-- 
+############################################################
+# Code Blocks                                              #       
+############################################################
+-->
+# Code Blocks 
+
+
+## Code 
+The most useful command is `str`, the most powerful command is `apply`
+
+
+## Embedded Code (code inline)
+Summation from 1 to 100 is `r sum(1:100)`: this is done in `R` using `sum(1:100)`。 
+
+
+## code chunk (code listing)
+```{r} 
+paste("Hello", "World!") 
+``` 
+
+
+## code chunk (code listing with prompt)
+```{r prompt=TRUE} 
+paste("Hello", "World!") 
+``` 
+
+
+## code chunk (code listing with result only)
+```{r eval=TRUE, echo=FALSE} 
+paste("Hello", "World!") 
+``` 
+
+## code chunk (verbatim) 
+
+```
+# 109-1-R-exam2
+# ex1(a)
+my.inverse <- function(n){
+    cat("Computing the Inverse Matrices.\n")  
+    cat("Please Enter", n, " by ", n, ":")
+    m <- matrix(scan(), ncol=n, nrow=n)
+    list(Mat=m, Mat.inverse=solve(m))
+}
+
+my.inverse(n=3)
+```
+
+<!-- 
+############################################################
+# Tables                                                   #       
+############################################################
+-->
+# Tables 
+
+
+## Hand-Crafted Tables 
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+| 12    | 12   |  12 | 12 |
+| 123 | 123 | 123 | 123 |
+| 1 | 1 | 1 | 1 |
+
+
+## Data Frame (`data.frame`) Tables
+```{r results = 'asis'}
+head(airquality) # don't work in R Markdown
+```
+
+## knitr::kable Tables
+```{r airquality, results = 'asis'}
+mydata <- airquality[1:4, ]
+knitr::kable(mydata, caption = "Table with kable")
+```
+
+## xtable::xtable Tables
+```{r results = "asis"} 
+# install.packages("xtable")
+library(xtable)
+print(xtable(mydata, caption = "Table with xtable"), type = "html")
+``` 
+
+
+<!-- 
+###########################################################
+# Graphics                                                #
+###########################################################
+-->
+# Graphics 
+
+
+## Base Graphics
+```{r iris-plot, fig.cap="The iris data."}
+attach(iris)
+par(mfrow=c(1, 2))
+plot(Sepal.Length, col=iris$Species, main="Index Plot")
+hist(Sepal.Length, main="Histogram")
+```
+
+
+## Base Graphics (Size Control)
+```{r fig.height = 4, fig.width = 6}
+attach(iris)
+par(mfrow=c(1, 2))
+plot(Sepal.Length, col=iris$Species, main="Index Plot")
+hist(Sepal.Length, main="Histogram")
+```
+
+## ggplot2 Graphs (Centered)
+```{r fig.align = "center"} 
+# install.packages("ggplot2")
+# install.packages("gridExtra")
+#library(ggplot2)
+suppressMessages(require(ggplot2))
+library(gridExtra)
+p1 <- ggplot(iris, aes(x=1:length(Sepal.Length), y=Sepal.Length, 
+                       color=Species)) + geom_point(size=3)
+p2 <- ggplot(iris, aes(x=Sepal.Length)) + 
+        geom_histogram()
+grid.arrange(p1, p2, nrow=1, ncol=2)
+```
+
+
+## Images 
+image: ![This is the offical logo of R.](https://www.r-project.org/Rlogo.png){width=30%}
+
+
+## Images (Rendered with knitr)
+```{r, out.width='25%', fig.align="center", fig.cap="R的Logo"}
+knitr::include_graphics("https://www.r-project.org/Rlogo.png")
+```
+
+<!-- 
+###########################################################
+# Math Formulas                                           #
+###########################################################
+-->
+# Math Formulas 
+
+
+## Inline Math 
+The Area of a Circle: $A = \pi\times r^{2}$，Average: $\bar{X}=\frac{\sum_{i=1}^n x_i}{n}$.
+
+
+## Display Math (Unnumbered)
+The Probability Density Function of the Normal Distribution ${\sf N}(\mu, \sigma)$ is
+\[ 
+f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}} 
+\] 
+
+## Display Math (Numbered)
+
+The Pauli Matrices
+\begin{equation}
+\sigma_x = 
+  \begin{pmatrix}
+    0 & 1 \\
+    1 & 0
+  \end{pmatrix}, \qquad
+\sigma_y = 
+  \begin{pmatrix}
+    0 & -i \\
+    i & 0
+  \end{pmatrix}, \qquad
+\sigma_z = 
+  \begin{pmatrix}
+    1 & 0 \\
+    0 & -1
+  \end{pmatrix}.
+  (\#eq:matrix)
+\end{equation}
+
+The Rogers-Ramanujan Identity
+\begin{equation}
+  1 +  \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots = \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},\qquad \text{for $|q|<1$}.
+  (\#eq:roger)
+\end{equation}
+
+
+<!-- 
+###########################################################
+# Misc                                                    #
+###########################################################
+-->
+# Misc 
+
+
+Three or more consecutive (*) generate a horizontal line: 
+
+****** 
+
+Three or more consecutive (-) generate a page break: 
+
+------
+
+
+> block quote
+
+
+This is a sentence with 2 blank rows below.
+<br><br/><br><br/>
+This is a sentence with 2 blank rows above.
+
+
+Add a grey borderline (with html):
+<hr style="border:1px solid gray"> </hr>
+
+
+This is a paragraph needs footnote ^[Here is the footnote.]
+
+
+<!-- 
+###########################################################
+# References                                              #
+###########################################################
+-->
+# References 
+
+* Markdown Syntax is in Chapter \@ref(Syntax).
+* See Figure \@ref(fig:iris-plot)
+* See Table \@ref(tab:airquality)
+* See Equation \@ref(eq:matrix)
