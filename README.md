@@ -5,7 +5,7 @@
 
 ## 評分標準
 
-實際資料分析：繳交書面報告（Rmd / Rnw 檔案配合 knitr / pandoc 生成 html / pdf / jupyter notebook）三至五頁及上台展示（五分鐘）。 
+實際資料分析：繳交書面報告（Rmd / Rnw 檔案配合 knitr 生成 html / pdf / ipynb）三至五頁及上台展示（五分鐘）。 
 
 ## 授課內容
 
