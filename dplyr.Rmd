@@ -258,7 +258,8 @@ not_BTV_SEA <- flights %>%
 - One should be mindful of the missingness and any potential causes of this missingness throughout the analysis
 
 What are other summary functions we can use ? 
-- One can use any function in R that takes many values and returns just one inside the `summarize()` verb to compute summary statistics- Some selected functions
+- One can use any function in R that takes many values and returns just one inside the `summarize()` verb to compute summary statistics
+- Some selected functions
   - `mean()`: the average
   - `sd()`: the standard deviation, which is a measure of spread
   - `min()` and `max()`: the minimum and maximum values, respectively
@@ -324,16 +325,7 @@ Because after the first `summarize()`, the variable `temp` disappears as it has 
 ```{r}
 diamonds %>% 
     group_by(cut)
-```
 
-```{r echo=FALSE, purl=FALSE}
-# This code is used for dynamic non-static in-line text output purposes
-cut_levels <- diamonds %>%
-    select(cut) %>%
-    n_distinct()
-```
-
-```{r}
 diamonds %>% 
     group_by(cut) %>% 
     summarize(avg_price = mean(price))
