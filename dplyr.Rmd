@@ -115,15 +115,16 @@ x %>%
 
 - Read this sequence as:
   1. Take `x` *then*
-  1. Use this output as the input to the next function `f()` *then*
-  1. Use this output as the input to the next function `g()` *then*
-  1. Use this output as the input to the next function `h()`
+  1. Use this output as the input to the next function `action1()` *then*
+  1. Use this output as the input to the next function `action2()` *then*
+  1. Use this output as the input to the next function `action3()` *then*
+  1. Use this output as the input to the next function `action4()`
 
 - While both approaches achieve the same goal, the latter is much more human-readable because one can clearly read the sequence of operations line-by-line 
  
 - Throughout this introduction:
   1. The starting value `x` will be a data frame
-  1. The sequence of functions `f()`, `g()`, and `h()`, will mostly be a sequence of any number of the six data wrangling verb-named key functions 
+  1. The sequence of functions `action1()`, `action2()`, `action3()`, and `action4()` will mostly be a sequence of any number of the six data wrangling verb-named key functions 
   1. The result will be the transformed/modified data frame
   
 - Many more advanced data wrangling functions than just the key six ones listed
